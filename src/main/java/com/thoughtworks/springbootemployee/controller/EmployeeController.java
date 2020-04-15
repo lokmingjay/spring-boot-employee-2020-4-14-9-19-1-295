@@ -29,9 +29,13 @@ public class EmployeeController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee createNewEmployee(@RequestBody Employee employee) {
-        employees.add(employee);
-        return employee;
+    public Employee createNewEmployee(@RequestBody Employee newEmployee) {
+        if(employees.stream().noneMatch(employee -> employee.getId() == newEmployee.getId() )) {
+            employees.add(newEmployee);
+            return newEmployee;
+        }
+            return null;
+
     }
 
     @PutMapping("/{employeeId}")
@@ -41,7 +45,12 @@ public class EmployeeController {
         return newEmployee;
     }
 
-
+    @DeleteMapping("/{employeeId}")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public List<Employee> removeEmployee(@PathVariable("employeeId")  Integer employeeId){
+        employees.removeIf(employee -> employee.getId()==employeeId);
+        return employees;
+    }
 
 
 }
