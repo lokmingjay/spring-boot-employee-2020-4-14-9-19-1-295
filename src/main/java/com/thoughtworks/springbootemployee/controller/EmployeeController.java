@@ -70,6 +70,4 @@ public class EmployeeController {
         employees.removeIf(employee -> employee.getId() == employeeId);
         return employees;
     }
-
-
 }

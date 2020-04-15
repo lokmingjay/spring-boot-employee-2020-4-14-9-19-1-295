@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.Array;
@@ -56,5 +57,26 @@ public class CompanyController {
         return null;
     }
 
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public Company createNewCompany(@RequestBody Company newCompany) {
+       if(companyList.stream().noneMatch(company -> company.getId() == newCompany.getId())){
+           companyList.add(newCompany);
+           return newCompany;
+       }
+       return null;
+    }
+
+    @PutMapping("/{companyId}")
+    public Company changeCompany(@PathVariable("companyId") int companyId, @RequestBody Company targetCompany) {
+        companyList.removeIf(company -> company.getId() == companyId);
+        companyList.add(targetCompany);
+        return targetCompany;
+    }
+
+    @DeleteMapping("/{companyId}")
+    public void deleteEmployee(@PathVariable("companyId") int companyId) {
+        companyList.removeIf(company -> company.getId() == companyId);
+    }
 
 }
