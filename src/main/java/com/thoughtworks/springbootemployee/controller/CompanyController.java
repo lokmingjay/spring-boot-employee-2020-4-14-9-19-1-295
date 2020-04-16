@@ -33,15 +33,7 @@ public class CompanyController {
 
     @GetMapping("/{companyId}/employees")
     public List<Employee> getEmployeeByCompanyId(@PathVariable("companyId") int companyId) {
-        Company targetCompany = companyList
-                .stream()
-                .filter(company -> company.getId() == companyId)
-                .findFirst()
-                .orElse(null);
-        if (targetCompany != null) {
-            return targetCompany.getEmployees();
-        }
-        return null;
+        return service.getEmployeesByCompanyId(companyId);
     }
 
     @PostMapping
