@@ -39,11 +39,7 @@ public class CompanyController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company createNewCompany(@RequestBody Company newCompany) {
-        if (companyList.stream().noneMatch(company -> company.getId() == newCompany.getId())) {
-            companyList.add(newCompany);
-            return newCompany;
-        }
-        return null;
+        return service.createNewCompany(newCompany);
     }
 
     @PutMapping("/{companyId}")

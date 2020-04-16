@@ -29,4 +29,12 @@ public class CompanyService {
                 Company targetCompany =  companyRepository.getCompanyById(companyId);
                 return targetCompany.getEmployees();
     }
+
+    public Company createNewCompany(Company newCompany) {
+                Company targetCompany = companyRepository.getCompanyById(newCompany.getId());
+                if(targetCompany == null){
+                   return companyRepository.addNewRepository(newCompany);
+                }
+                return null;
+    }
 }

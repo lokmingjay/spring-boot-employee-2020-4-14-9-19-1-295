@@ -38,4 +38,9 @@ public class CompanyRepository {
                 .findFirst()
                 .orElse(null);
     }
+
+    public Company addNewRepository(Company newCompany) {
+             companyList.add(newCompany);
+             return newCompany;
+    }
 }
