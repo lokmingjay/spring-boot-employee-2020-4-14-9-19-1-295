@@ -16,13 +16,6 @@ import java.util.stream.Collectors;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-
-    public List<Employee> employees = new ArrayList<>(Arrays.asList(
-            new Employee(1, "Jay", 10, "Male"),
-            new Employee(2, "Andy", 20, "Male"),
-            new Employee(3, "Leo", 30, "Male"),
-            new Employee(4, "Wesley", 40, "Male"),
-            new Employee(5, "Hilary", 50, "Female")));
     @Autowired
     private EmployeeService service;
 
@@ -32,12 +25,12 @@ public class EmployeeController {
                                            @RequestParam(required = false) Integer pageSize,
                                            @RequestParam(required = false) String gender) {
 
-          return service.getEmployee(page,pageSize,gender);
+        return service.getEmployee(page, pageSize, gender);
     }
 
     @GetMapping("/{employeeId}")
     public Employee getEmployee(@PathVariable("employeeId") Integer employeeId) {
-            return service.getEmployeeById(employeeId);
+        return service.getEmployeeById(employeeId);
     }
 
     @PostMapping
@@ -48,7 +41,7 @@ public class EmployeeController {
 
     @PutMapping("/{employeeId}")
     public List<Employee> changeEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody Employee newEmployee) {
-        return service.updateEmployee(employeeId,newEmployee);
+        return service.updateEmployee(employeeId, newEmployee);
     }
 
     @DeleteMapping("/{employeeId}")

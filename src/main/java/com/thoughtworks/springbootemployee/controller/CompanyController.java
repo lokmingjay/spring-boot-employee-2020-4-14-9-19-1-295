@@ -20,7 +20,7 @@ public class CompanyController {
     @Autowired
     private CompanyService service;
 
-    @GetMapping()
+    @GetMapping
     public List<Company> getCompanies(@RequestParam(required = false) Integer page,
                                       @RequestParam(required = false) Integer pageSize) {
         return service.getCompanies(page, pageSize);
@@ -28,10 +28,7 @@ public class CompanyController {
 
     @GetMapping("/{companyId}")
     public Company getCompany(@PathVariable("companyId") Integer companyId) {
-        return companyList.stream()
-                .filter(company -> company.getId() == companyId)
-                .findFirst()
-                .get();
+        return service.getCompanyById(companyId);
     }
 
     @GetMapping("/{companyId}/employees")

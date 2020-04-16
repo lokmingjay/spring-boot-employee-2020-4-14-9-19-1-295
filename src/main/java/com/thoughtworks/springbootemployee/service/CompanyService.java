@@ -18,4 +18,8 @@ public class CompanyService {
         }
         return companyRepository.getCompanies();
     }
+
+    public Company getCompanyById(Integer companyId) {
+        return companyRepository.getCompanyById(companyId);
+    }
 }

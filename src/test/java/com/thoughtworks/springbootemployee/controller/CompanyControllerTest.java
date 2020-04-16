@@ -2,6 +2,8 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -22,7 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.reset;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -30,26 +31,25 @@ public class CompanyControllerTest {
 
     @Autowired
     private CompanyController companyController;
+    @Autowired
+    private CompanyRepository companyRepository;
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         RestAssuredMockMvc.standaloneSetup(companyController);
 
-        companyController.employees = new ArrayList<>(Arrays.asList(
+        companyRepository.employeeList = new ArrayList<>(Arrays.asList(
                 new Employee(1, "Jay", 10, "Male"),
                 new Employee(2, "Andy", 20, "Male"),
                 new Employee(3, "Leo", 30, "Male"),
                 new Employee(4, "Wesley", 40, "Male"),
                 new Employee(5, "Hilary", 50, "Female")));
-
-        companyController.companyList = new ArrayList<>(Arrays.asList(
-                new Company("A", 5, companyController.employees, 1),
-                new Company("B", 5, companyController.employees, 2),
-                new Company("C", 5, companyController.employees, 3)
+        companyRepository.companyList = new ArrayList<>(Arrays.asList(
+                new Company("A", 5, companyRepository.employeeList, 1),
+                new Company("B", 5, companyRepository.employeeList, 2),
+                new Company("C", 5, companyRepository.employeeList, 3)
         ));
-
-
     }
 
     @Test
@@ -99,8 +99,8 @@ public class CompanyControllerTest {
                 .get("/companies/1");
 
         Company company = response.getBody().as(Company.class);
-        Assert.assertEquals(HttpStatus.OK.value(),response.getStatusCode());
-        Assert.assertEquals("A",company.getCompanyName());
+        Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
+        Assert.assertEquals("A", company.getCompanyName());
 
     }
 
@@ -110,13 +110,13 @@ public class CompanyControllerTest {
         company.setId(4);
         company.setCompanyName("D");
 
-        MockMvcResponse response =given().contentType(ContentType.JSON)
+        MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(company)
                 .when()
                 .post("/companies");
 
         Company targetCompany = response.getBody().as(Company.class);
-        Assert.assertEquals("D",targetCompany.getCompanyName());
+        Assert.assertEquals("D", targetCompany.getCompanyName());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class CompanyControllerTest {
                 .put("/companies/1");
 
         Company targetCompany = response.getBody().as(Company.class);
-        Assert.assertEquals("AA",targetCompany.getCompanyName());
+        Assert.assertEquals("AA", targetCompany.getCompanyName());
     }
 
     @Test
@@ -141,7 +141,7 @@ public class CompanyControllerTest {
                 .when()
                 .delete("/companies/1");
 
-        Assert.assertNull(companyController.companyList.stream().filter(company -> company.getId()==1).findFirst().orElse(null));
+        Assert.assertNull(companyController.companyList.stream().filter(company -> company.getId() == 1).findFirst().orElse(null));
     }
 
     @Test
@@ -159,7 +159,7 @@ public class CompanyControllerTest {
         });
 
 
-      // Assert.assertEquals("Jay",targetEmployees.get(0).getName());
+        // Assert.assertEquals("Jay",targetEmployees.get(0).getName());
 
     }
 }
