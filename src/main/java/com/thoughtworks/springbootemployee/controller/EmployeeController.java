@@ -1,11 +1,10 @@
 package com.thoughtworks.springbootemployee.controller;
 
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.thoughtworks.springbootemployee.model.Employee;
-import org.json.JSONObject;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,56 +17,43 @@ import java.util.stream.Collectors;
 public class EmployeeController {
 
 
-    public List<Employee> employees ;
+    public List<Employee> employees = new ArrayList<>(Arrays.asList(
+            new Employee(1, "Jay", 10, "Male"),
+            new Employee(2, "Andy", 20, "Male"),
+            new Employee(3, "Leo", 30, "Male"),
+            new Employee(4, "Wesley", 40, "Male"),
+            new Employee(5, "Hilary", 50, "Female")));
+    @Autowired
+    private EmployeeService service;
 
 
     @GetMapping
     public List<Employee> getRangeEmployee(@RequestParam(required = false) Integer page,
                                            @RequestParam(required = false) Integer pageSize,
                                            @RequestParam(required = false) String gender) {
-        if (gender != null) {
-            return employees.stream()
-                    .filter(employee -> employee.getGender().equals(gender))
-                    .collect(Collectors.toList());
-        }
 
-        if (page != null && pageSize != null) {
-            return employees.subList((page - 1) * pageSize, page * pageSize);
-        }
-        return employees;
+          return service.getEmployee(page,pageSize,gender);
     }
 
     @GetMapping("/{employeeId}")
     public Employee getEmployee(@PathVariable("employeeId") Integer employeeId) {
-             Employee targetEmployee =   employees.stream()
-                .filter(employee -> employee.getId() == employeeId)
-                .findFirst()
-                .orElse(null);
-             return targetEmployee;
+            return service.getEmployeeById(employeeId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public List<Employee> createNewEmployee(@RequestBody Employee newEmployee) {
-        if (employees.stream().noneMatch(employee -> employee.getId() == newEmployee.getId())) {
-            employees.add(newEmployee);
-            return employees;
-        }
-        return null;
-
+        return service.addEmployee(newEmployee);
     }
 
     @PutMapping("/{employeeId}")
     public List<Employee> changeEmployee(@PathVariable("employeeId") Integer employeeId, @RequestBody Employee newEmployee) {
-        employees.removeIf(employee -> employee.getId() == employeeId);
-        employees.add(newEmployee);
-        return employees;
+        return service.updateEmployee(employeeId,newEmployee);
     }
 
     @DeleteMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public List<Employee> removeEmployee(@PathVariable("employeeId") Integer employeeId) {
-        employees.removeIf(employee -> employee.getId() == employeeId);
-        return employees;
+        return service.removeEmployee(employeeId);
     }
 }
