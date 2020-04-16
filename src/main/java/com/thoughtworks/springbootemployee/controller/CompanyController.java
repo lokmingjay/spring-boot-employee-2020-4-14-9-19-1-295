@@ -6,7 +6,6 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +32,6 @@ public class CompanyController {
     public List<Company> getEmployees(@RequestParam(required = false) Integer page,
                                       @RequestParam(required = false) Integer pageSize) {
         if (page != null && pageSize != null) {
-
             return companyList.subList((page - 1) * pageSize, page * pageSize);
         }
         return companyList;
@@ -41,7 +39,10 @@ public class CompanyController {
 
     @GetMapping("/{companyId}")
     public Company getCompany(@PathVariable("companyId") Integer companyId) {
-        return companyList.stream().filter(company -> company.getId() == companyId).findFirst().get();
+        return companyList.stream()
+                .filter(company -> company.getId() == companyId)
+                .findFirst()
+                .get();
     }
 
     @GetMapping("/{companyId}/employees")
@@ -57,14 +58,14 @@ public class CompanyController {
         return null;
     }
 
-    @PostMapping()
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company createNewCompany(@RequestBody Company newCompany) {
-       if(companyList.stream().noneMatch(company -> company.getId() == newCompany.getId())){
-           companyList.add(newCompany);
-           return newCompany;
-       }
-       return null;
+        if (companyList.stream().noneMatch(company -> company.getId() == newCompany.getId())) {
+            companyList.add(newCompany);
+            return newCompany;
+        }
+        return null;
     }
 
     @PutMapping("/{companyId}")
