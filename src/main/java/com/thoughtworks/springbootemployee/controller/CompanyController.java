@@ -14,19 +14,8 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
 
-    public List<Employee> employees = new ArrayList<>(Arrays.asList(
-            new Employee(1, "Jay", 10, "Male"),
-            new Employee(2, "Andy", 20, "Male"),
-            new Employee(3, "Leo", 30, "Male"),
-            new Employee(4, "Wesley", 40, "Male"),
-            new Employee(5, "Hilary", 50, "Female")));
-
-    private List<Company> companyList = new ArrayList<>(Arrays.asList(
-            new Company("A", 5, employees, 1),
-            new Company("B", 5, employees, 2),
-            new Company("C", 5, employees, 3)
-    ));
-
+    public List<Employee> employees;
+    public List<Company> companyList ;
 
     @GetMapping()
     public List<Company> getEmployees(@RequestParam(required = false) Integer page,

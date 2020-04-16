@@ -10,6 +10,8 @@ public class Company {
     private int employeesNumber;
     private List<Employee> employees;
 
+    public Company(){};
+
     public Company(String companyName, int employeesNumber, List<Employee> employees, int id) {
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
