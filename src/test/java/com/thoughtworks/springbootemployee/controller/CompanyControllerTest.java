@@ -91,4 +91,75 @@ public class CompanyControllerTest {
 
 
     }
+
+    @Test
+    public void should_get_company_by_id_success() {
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .get("/companies/1");
+
+        Company company = response.getBody().as(Company.class);
+        Assert.assertEquals(HttpStatus.OK.value(),response.getStatusCode());
+        Assert.assertEquals("A",company.getCompanyName());
+
+    }
+
+    @Test
+    public void should_create_new_company_success() {
+        Company company = new Company();
+        company.setId(4);
+        company.setCompanyName("D");
+
+        MockMvcResponse response =given().contentType(ContentType.JSON)
+                .body(company)
+                .when()
+                .post("/companies");
+
+        Company targetCompany = response.getBody().as(Company.class);
+        Assert.assertEquals("D",targetCompany.getCompanyName());
+    }
+
+    @Test
+    public void should_update_company_success() {
+        Company company = new Company();
+        company.setId(1);
+        company.setCompanyName("AA");
+
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .body(company)
+                .when()
+                .put("/companies/1");
+
+        Company targetCompany = response.getBody().as(Company.class);
+        Assert.assertEquals("AA",targetCompany.getCompanyName());
+    }
+
+    @Test
+    public void should_delete_company_success() {
+
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .delete("/companies/1");
+
+        Assert.assertNull(companyController.companyList.stream().filter(company -> company.getId()==1).findFirst().orElse(null));
+    }
+
+    @Test
+    public void should_get_employees_by_company_id_success() {
+
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .get("/companies/1/employees");
+
+        List<Employee> employeeList = response.getBody().as(new TypeRef<List<Employee>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+
+
+      // Assert.assertEquals("Jay",targetEmployees.get(0).getName());
+
+    }
 }
