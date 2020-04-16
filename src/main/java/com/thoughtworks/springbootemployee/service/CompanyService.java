@@ -37,4 +37,12 @@ public class CompanyService {
                 }
                 return null;
     }
+
+    public Company updateCompany(int companyId, Company targetCompany) {
+        return companyRepository.updateCompany(companyId,targetCompany);
+    }
+
+    public void removeCompany(int companyId) {
+         companyRepository.removeCompany(companyId);
+    }
 }

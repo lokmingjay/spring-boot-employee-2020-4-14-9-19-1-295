@@ -44,14 +44,12 @@ public class CompanyController {
 
     @PutMapping("/{companyId}")
     public Company changeCompany(@PathVariable("companyId") int companyId, @RequestBody Company targetCompany) {
-        companyList.removeIf(company -> company.getId() == companyId);
-        companyList.add(targetCompany);
-        return targetCompany;
+        return service.updateCompany(companyId,targetCompany);
     }
 
     @DeleteMapping("/{companyId}")
     public void deleteEmployee(@PathVariable("companyId") int companyId) {
-        companyList.removeIf(company -> company.getId() == companyId);
+        service.removeCompany(companyId);
     }
 
 }

@@ -43,4 +43,14 @@ public class CompanyRepository {
              companyList.add(newCompany);
              return newCompany;
     }
+
+    public Company updateCompany(int companyId, Company targetCompany) {
+        companyList.removeIf(company -> company.getId() == companyId);
+        companyList.add(targetCompany);
+        return targetCompany;
+    }
+
+    public void removeCompany(int companyId) {
+        companyList.removeIf(company -> company.getId() == companyId);
+    }
 }

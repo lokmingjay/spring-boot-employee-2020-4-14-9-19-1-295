@@ -141,7 +141,7 @@ public class CompanyControllerTest {
                 .when()
                 .delete("/companies/1");
 
-        Assert.assertNull(companyController.companyList.stream().filter(company -> company.getId() == 1).findFirst().orElse(null));
+        Assert.assertNull(companyRepository.companyList.stream().filter(company -> company.getId() == 1).findFirst().orElse(null));
     }
 
     @Test
