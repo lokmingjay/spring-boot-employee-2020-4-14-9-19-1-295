@@ -23,33 +23,35 @@ public class CompanyController {
     @GetMapping
     public List<Company> getCompanies(@RequestParam(required = false) Integer page,
                                       @RequestParam(required = false) Integer pageSize) {
+
         return service.getCompanies(page, pageSize);
     }
 
     @GetMapping("/{companyId}")
-    public Company getCompany(@PathVariable("companyId") Integer companyId) {
+    public Company getCompanyById(@PathVariable("companyId") Integer companyId) {
         return service.getCompanyById(companyId);
     }
 
-    @GetMapping("/{companyId}/employees")
-    public List<Employee> getEmployeeByCompanyId(@PathVariable("companyId") int companyId) {
-        return service.getEmployeesByCompanyId(companyId);
-    }
-
+//    @GetMapping("/{companyId}/employees")
+//    public List<Employee> getEmployeeByCompanyId(@PathVariable("companyId") int companyId) {
+//        return service.getEmployeesByCompanyId(companyId);
+//    }
+//
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company createNewCompany(@RequestBody Company newCompany) {
         return service.createNewCompany(newCompany);
     }
-
-    @PutMapping("/{companyId}")
-    public Company changeCompany(@PathVariable("companyId") int companyId, @RequestBody Company targetCompany) {
-        return service.updateCompany(companyId,targetCompany);
-    }
-
-    @DeleteMapping("/{companyId}")
-    public void deleteEmployee(@PathVariable("companyId") int companyId) {
-        service.removeCompany(companyId);
-    }
+//
+//    @PutMapping("/{companyId}")
+//    public Company changeCompany(@PathVariable("companyId") int companyId, @RequestBody Company targetCompany) {
+//        return service.updateCompany(companyId,targetCompany);
+//    }
+//
+//    @DeleteMapping("/{companyId}")
+//    public void deleteEmployee(@PathVariable("companyId") int companyId) {
+//
+//        service.removeCompany(companyId);
+//    }
 
 }

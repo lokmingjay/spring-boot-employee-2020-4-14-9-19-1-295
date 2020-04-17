@@ -3,8 +3,11 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -13,31 +16,36 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public Employee getEmployeeById(Integer employeeId) {
-        return employeeRepository.getEmployeeById(employeeId);
+    public Employee findEmployeeById(Integer employeeId) {
+        return employeeRepository.findById(employeeId).orElse(null);
+       // return employeeRepository.getEmployeeById(employeeId);
     }
 
-    public List<Employee> addEmployee(Employee newEmployee) {
-        return employeeRepository.addEmployee(newEmployee);
+    public Employee addEmployee(Employee newEmployee) {
+        return employeeRepository.save(newEmployee);
     }
 
-    public List<Employee> updateEmployee(Integer employeeId, Employee newEmployee) {
-        return employeeRepository.updateEmployee(employeeId, newEmployee);
+    public void updateEmployee(Integer employeeId, Employee newEmployee) {
+        Employee oldEmployee  = employeeRepository.findById(employeeId).orElse(null);
+        if(oldEmployee!=null) {
+            employeeRepository.updateName(employeeId,newEmployee.getName());
+        }
+
     }
 
-    public List<Employee> removeEmployee(Integer employeeId) {
-        return employeeRepository.removeEmployee(employeeId);
+    public void removeEmployee(Integer employeeId) {
+        employeeRepository.deleteById(employeeId);
     }
-
+//
     public List<Employee> getEmployee(Integer page, Integer pageSize, String gender) {
         if (gender != null) {
-            return employeeRepository.getEmployeeByGender(gender);
+            return employeeRepository.findByGender(gender);
         }
 
         if (page != null && pageSize != null) {
-            return employeeRepository.getEmployeeByPage(page, pageSize);
+            return employeeRepository.findAll(PageRequest.of(page,pageSize)).getContent();
 
         }
-        return employeeRepository.getEmployee();
+        return employeeRepository.findAll();
     }
 }
