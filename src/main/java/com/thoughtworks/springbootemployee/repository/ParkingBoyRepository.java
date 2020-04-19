@@ -15,4 +15,9 @@ public interface ParkingBoyRepository extends JpaRepository<ParkingBoy,Integer> 
     @Modifying
     @Query(value ="update parking_boys p set p.nick_name = :nickName where p.id = :parkingBoyId", nativeQuery = true )
     void updateName(@Param("parkingBoyId") Integer parkingBoyId,  @Param("nickName") String nickName);
+
+
+    @Modifying
+    @Query(value = "ALTER TABLE PARKING_BOYS ALTER COLUMN ID RESTART WITH 1", nativeQuery = true)
+    void resetAutoIncrement();
 }

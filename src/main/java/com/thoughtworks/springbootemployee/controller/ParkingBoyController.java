@@ -43,4 +43,9 @@ public class ParkingBoyController {
     public void updateParkingBoyInfo(@PathVariable("parkingBoyId") Integer parkingBoyId,@RequestBody ParkingBoy parkingBoy) {
          service.updateName(parkingBoyId,parkingBoy.getNickName());
     }
+
+    @DeleteMapping("/{parkingBoyId}")
+    public void deleteParkingBoy(@PathVariable("parkingBoyId") Integer parkingBoyId) {
+        service.deleteParkingBoy(parkingBoyId);
+    }
 }

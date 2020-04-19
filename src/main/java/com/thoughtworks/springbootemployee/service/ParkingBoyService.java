@@ -34,4 +34,8 @@ public class ParkingBoyService {
     public List<ParkingBoy> findByPage(Integer page, Integer pageSize) {
         return repository.findAll(PageRequest.of(page,pageSize)).getContent();
     }
+
+    public void deleteParkingBoy(Integer parkingBoyId) {
+        repository.deleteById(parkingBoyId);
+    }
 }

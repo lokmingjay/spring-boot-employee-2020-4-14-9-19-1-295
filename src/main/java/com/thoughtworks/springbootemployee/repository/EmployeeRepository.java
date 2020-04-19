@@ -25,6 +25,10 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     @Modifying
     @Query(value ="update EMPLOYEE e set e.company_id = null where e.company_id = :companyId", nativeQuery = true )
     void deleteEmployeeByCompanyId(@Param("companyId")  int companyId);
+
+    @Modifying
+    @Query(value = "ALTER TABLE EMPLOYEE ALTER COLUMN ID RESTART WITH 1", nativeQuery = true)
+    void resetAutoIncrement();
 //    public List<Employee> employeeList = new ArrayList<>(Arrays.asList(
 //            new Employee(1, "Jay", 10, "Male"),
 //            new Employee(2, "Andy", 20, "Male"),

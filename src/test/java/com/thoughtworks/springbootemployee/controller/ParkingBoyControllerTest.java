@@ -43,12 +43,13 @@ public class ParkingBoyControllerTest {
     @Before
     public void setUp() throws Exception {
         RestAssuredMockMvc.standaloneSetup(parkingBoyController);
-        parkingBoyRepository.save(new ParkingBoy(1,"Jay",null));
-        parkingBoyRepository.save(new ParkingBoy(2,"Ming",null));
+        parkingBoyRepository.resetAutoIncrement();
+        employeeRepository.resetAutoIncrement();
         employeeRepository.save(new Employee(1,"Jay",23,"Female",null));
         employeeRepository.save(new Employee(2,"Ming",23,"Female",null));
-
-
+        employeeRepository.save(new Employee(3,"Leo",23,"Female",null));
+        parkingBoyRepository.save(new ParkingBoy(1,"Jay",null));
+        parkingBoyRepository.save(new ParkingBoy(2,"Ming",null));
     }
 
     @Test
@@ -66,6 +67,7 @@ public class ParkingBoyControllerTest {
         Assert.assertEquals(2, parkingBoyList.size());
         Assert.assertEquals(23,parkingBoyList.get(0).getEmployee().getAge().intValue());
     }
+
 
     @Test
     public void should_get_all_parking_boys_by_page() {
@@ -118,6 +120,23 @@ public class ParkingBoyControllerTest {
         Assert.assertEquals("Test", parkingBoyRepository.findById(1).get().getNickName());
     }
 
+    @Test
+    public void should_delete_parking_boy_by_id() {
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .delete("/parking-boys/1");
+        Assert.assertEquals(1, parkingBoyRepository.count());
 
+    }
 
+    @Test
+    public void should_update_parking_boy() {
+        ParkingBoy parkingBoy = new ParkingBoy(null,"Test",null);
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .body(parkingBoy)
+                .when()
+                .put("/parking-boys/1");
+        Assert.assertEquals("Test", parkingBoyRepository.findById(1).get().getNickName());
+
+    }
 }
