@@ -39,11 +39,9 @@ public class CompanyService {
         companyRepository.updateCompany(companyId, name);
     }
 
-    public void deleteEmployeeByCompanyId(Integer  companyId) {
+    public void deleteEmployeeByCompanyId(Integer companyId) {
         //companyRepository.deleteById(companyId);
         employeeRepository.deleteEmployeeByCompanyId(companyId);
-
-
 
 
     }

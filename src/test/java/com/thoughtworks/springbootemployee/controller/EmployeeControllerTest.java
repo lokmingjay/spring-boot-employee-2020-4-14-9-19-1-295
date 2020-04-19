@@ -40,11 +40,11 @@ public class EmployeeControllerTest {
         RestAssuredMockMvc.standaloneSetup(employeeController);
 
         employeeList = Arrays.asList(
-                new Employee(1, "Jay", 10, "Male",null),
-                new Employee(2, "Andy", 20, "Male",null),
-                new Employee(3, "Leo", 30, "Male",null),
-                new Employee(4, "Wesley", 40, "Male",null),
-                new Employee(5, "Hilary", 50, "Female",null));
+                new Employee(1, "Jay", 10, "Male", null),
+                new Employee(2, "Andy", 20, "Male", null),
+                new Employee(3, "Leo", 30, "Male", null),
+                new Employee(4, "Wesley", 40, "Male", null),
+                new Employee(5, "Hilary", 50, "Female", null));
 
         Mockito.when(employeeRepository.findAll()).thenReturn(employeeList);
     }
@@ -108,7 +108,7 @@ public class EmployeeControllerTest {
     @Test
     public void should_add_employee_success() {
 
-        Employee employee = new Employee (null,"Test",20,"Male",null);
+        Employee employee = new Employee(null, "Test", 20, "Male", null);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
@@ -117,7 +117,7 @@ public class EmployeeControllerTest {
         Assert.assertEquals(HttpStatus.CREATED.value(), response.getStatusCode());
 
         //Mockito.verify(employeeRepository, Mockito.times(1)).);
-    //    Assert.assertEquals("Test", targetCompanyName);
+        //    Assert.assertEquals("Test", targetCompanyName);
     }
 
     @Test
@@ -133,13 +133,13 @@ public class EmployeeControllerTest {
     @Test
     public void should_update_employee_success() {
         // given...
-        Employee employee = new Employee(1, "JayJay", 10, "Female",null);
+        Employee employee = new Employee(1, "JayJay", 10, "Female", null);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(employee)
                 .when()
                 .put("/employees/1");
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
-        Mockito.verify(employeeRepository, Mockito.times(1)).updateName(1,"JayJay");
+        Mockito.verify(employeeRepository, Mockito.times(1)).updateName(1, "JayJay");
         //  Assert.assertEquals("JayJay", employeeList.stream().filter(employee1 -> employee1.getId() == 1).findFirst().get().getName());
     }
 }

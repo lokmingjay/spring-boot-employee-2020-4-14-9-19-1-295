@@ -5,9 +5,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -18,7 +16,6 @@ public class EmployeeService {
 
     public Employee findEmployeeById(Integer employeeId) {
         return employeeRepository.findById(employeeId).orElse(null);
-       // return employeeRepository.getEmployeeById(employeeId);
     }
 
     public Employee addEmployee(Employee newEmployee) {
@@ -26,21 +23,20 @@ public class EmployeeService {
     }
 
     public void updateEmployee(Integer employeeId, Employee newEmployee) {
-            employeeRepository.updateName(employeeId,newEmployee.getName());
+        employeeRepository.updateName(employeeId, newEmployee.getName());
     }
 
     public void removeEmployee(Integer employeeId) {
         employeeRepository.deleteById(employeeId);
     }
-//
+
     public List<Employee> getEmployee(Integer page, Integer pageSize, String gender) {
         if (gender != null) {
             return employeeRepository.findByGender(gender);
         }
 
         if (page != null && pageSize != null) {
-            return employeeRepository.findAll(PageRequest.of(page,pageSize)).getContent();
-
+            return employeeRepository.findAll(PageRequest.of(page, pageSize)).getContent();
         }
         return employeeRepository.findAll();
     }
