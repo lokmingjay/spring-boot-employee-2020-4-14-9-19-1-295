@@ -41,11 +41,11 @@ public class ParkingBoyControllerTest {
         RestAssuredMockMvc.standaloneSetup(parkingBoyController);
         parkingBoyRepository.resetAutoIncrement();
         employeeRepository.resetAutoIncrement();
-        employeeRepository.save(new Employee(1,"Jay",23,"Female",null));
-        employeeRepository.save(new Employee(2,"Ming",23,"Female",null));
-        employeeRepository.save(new Employee(3,"Leo",23,"Female",null));
-        parkingBoyRepository.save(new ParkingBoy(1,"Jay",null));
-        parkingBoyRepository.save(new ParkingBoy(2,"Ming",null));
+        employeeRepository.save(new Employee(1, "Jay", 23, "Female", null));
+        employeeRepository.save(new Employee(2, "Ming", 23, "Female", null));
+        employeeRepository.save(new Employee(3, "Leo", 23, "Female", null));
+        parkingBoyRepository.save(new ParkingBoy(1, "Jay", null));
+        parkingBoyRepository.save(new ParkingBoy(2, "Ming", null));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class ParkingBoyControllerTest {
             }
         });
         Assert.assertEquals(2, parkingBoyList.size());
-        Assert.assertEquals(23,parkingBoyList.get(0).getEmployee().getAge().intValue());
+        Assert.assertEquals(23, parkingBoyList.get(0).getEmployee().getAge().intValue());
     }
 
 
@@ -69,8 +69,8 @@ public class ParkingBoyControllerTest {
     public void should_get_all_parking_boys_by_page() {
 
         MockMvcResponse response = given().contentType(ContentType.JSON)
-                .param("page","0")
-                .param("pageSize","1")
+                .param("page", "0")
+                .param("pageSize", "1")
                 .when()
                 .get("/parking-boys");
         List<ParkingBoy> parkingBoyList = response.getBody().as(new TypeRef<List<ParkingBoy>>() {
@@ -84,15 +84,15 @@ public class ParkingBoyControllerTest {
 
     @Test
     public void should_create_parking_boy() {
-        ParkingBoy parkingBoy = new ParkingBoy(null,"Test",null);
+        ParkingBoy parkingBoy = new ParkingBoy(null, "Test", null);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(parkingBoy)
                 .when()
                 .post("/parking-boys");
 
-        ParkingBoy targetParkingBoy =response.getBody().as(ParkingBoy.class);
+        ParkingBoy targetParkingBoy = response.getBody().as(ParkingBoy.class);
 
-        Assert.assertEquals("Test",targetParkingBoy.getNickName());
+        Assert.assertEquals("Test", targetParkingBoy.getNickName());
     }
 
     @Test
@@ -102,7 +102,7 @@ public class ParkingBoyControllerTest {
                 .when()
                 .get("/parking-boys/1");
         ParkingBoy parkingBoy = response.getBody().as(ParkingBoy.class);
-        Assert.assertEquals("Jay",parkingBoy.getNickName());
+        Assert.assertEquals("Jay", parkingBoy.getNickName());
     }
 
     @Test
@@ -127,7 +127,7 @@ public class ParkingBoyControllerTest {
 
     @Test
     public void should_update_parking_boy() {
-        ParkingBoy parkingBoy = new ParkingBoy(null,"Test",null);
+        ParkingBoy parkingBoy = new ParkingBoy(null, "Test", null);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .body(parkingBoy)
                 .when()

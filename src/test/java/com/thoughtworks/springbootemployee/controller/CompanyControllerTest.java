@@ -3,7 +3,6 @@ package com.thoughtworks.springbootemployee.controller;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.TypeRef;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -41,23 +40,17 @@ public class CompanyControllerTest {
         RestAssuredMockMvc.standaloneSetup(companyController);
 
         employeeList = new ArrayList<>(Arrays.asList(
-                new Employee(1, "Jay", 10, "Male",1),
-                new Employee(2, "Andy", 20, "Male",1),
-                new Employee(3, "Leo", 30, "Male",1),
-                new Employee(4, "Wesley", 40, "Male",1),
-                new Employee(5, "Hilary", 50, "Female",1)));
+                new Employee(1, "Jay", 10, "Male", 1),
+                new Employee(2, "Andy", 20, "Male", 1),
+                new Employee(3, "Leo", 30, "Male", 1),
+                new Employee(4, "Wesley", 40, "Male", 1),
+                new Employee(5, "Hilary", 50, "Female", 1)));
         companyRepository.deleteAll();
         companyRepository.resetAutoIncrement();
-      //  companyRepository.resetAutoIncrement("COMPANY");
-        companyRepository.save( new Company("A", 5, null, 1));
-        companyRepository.save( new Company("B", 5, null, 2));
-        companyRepository.save( new Company("C", 5, null, 3));
+        companyRepository.save(new Company("A", 5, null, 1));
+        companyRepository.save(new Company("B", 5, null, 2));
+        companyRepository.save(new Company("C", 5, null, 3));
 
-//        companyRepository.companyList = new ArrayList<>(Arrays.asList(
-//                new Company("A", 5, companyRepository.employeeList, 1),
-//                new Company("B", 5, companyRepository.employeeList, 2),
-//                new Company("C", 5, companyRepository.employeeList, 3)
-//        ));
     }
 
     @Test
@@ -75,7 +68,6 @@ public class CompanyControllerTest {
         });
         Assert.assertEquals(HttpStatus.OK.value(), response.getStatusCode());
         Assert.assertEquals(3, companyList.size());
-        //Assert.assertEquals("Jay",companyList.get(0).getEmployees().get(0).getName());
     }
 
     @Test
@@ -143,15 +135,6 @@ public class CompanyControllerTest {
         Assert.assertEquals("AA", companyRepository.findById(1).get().getCompanyName());
     }
 
-//    @Test
-//    public void should_delete_company_success() {
-//
-//        MockMvcResponse response = given().contentType(ContentType.JSON)
-//                .when()
-//                .delete("/companies/1");
-//
-//        Assert.assertNull(.companyList.stream().filter(company -> company.getId() == 1).findFirst().orElse(null));
-//    }
 
     @Test
     public void should_get_employees_by_company_id_success() {
@@ -166,7 +149,7 @@ public class CompanyControllerTest {
                 return super.getType();
             }
         });
-        Assert.assertEquals(5,companyRepository.findById(1).get().getEmployeesNumber().intValue());
+        Assert.assertEquals(5, companyRepository.findById(1).get().getEmployeesNumber().intValue());
 
     }
 }
