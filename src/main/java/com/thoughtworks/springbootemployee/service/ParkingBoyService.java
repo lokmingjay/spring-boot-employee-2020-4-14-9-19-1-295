@@ -25,4 +25,8 @@ public class ParkingBoyService {
     public ParkingBoy findById(Integer parkingBoyId) {
         return repository.findById(parkingBoyId).orElse(null);
     }
+
+    public void updateName(Integer parkingBoyId, String nickName) {
+        repository.updateName(parkingBoyId,nickName);
+    }
 }

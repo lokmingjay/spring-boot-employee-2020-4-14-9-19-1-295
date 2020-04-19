@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.annotation.Target;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +68,19 @@ public class ParkingBoyControllerTest {
     }
 
     @Test
+    public void should_create_parking_boy() {
+        ParkingBoy parkingBoy = new ParkingBoy(null,"Test",null);
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .body(parkingBoy)
+                .when()
+                .post("/parking-boys");
+
+        ParkingBoy targetParkingBoy =response.getBody().as(ParkingBoy.class);
+
+        Assert.assertEquals("Test",targetParkingBoy.getNickName());
+    }
+
+    @Test
     public void should_get_parking_boy_by_id() {
 
         MockMvcResponse response = given().contentType(ContentType.JSON)
@@ -75,4 +89,18 @@ public class ParkingBoyControllerTest {
         ParkingBoy parkingBoy = response.getBody().as(ParkingBoy.class);
         Assert.assertEquals("Jay",parkingBoy.getNickName());
     }
+
+    @Test
+    public void should_update_parking_boy_info_by_id() {
+        ParkingBoy parkingBoy = new ParkingBoy();
+        parkingBoy.setNickName("Test");
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .body(parkingBoy)
+                .when()
+                .put("/parking-boys/1");
+        Assert.assertEquals("Test", parkingBoyRepository.findById(1).get().getNickName());
+    }
+
+
+
 }

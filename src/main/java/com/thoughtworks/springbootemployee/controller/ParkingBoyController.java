@@ -33,4 +33,8 @@ public class ParkingBoyController {
         return service.addParkingBoy(parkingBoy);
     }
 
+    @PutMapping("/{parkingBoyId}")
+    public void updateParkingBoyInfo(@PathVariable("parkingBoyId") Integer parkingBoyId,@RequestBody ParkingBoy parkingBoy) {
+         service.updateName(parkingBoyId,parkingBoy.getNickName());
+    }
 }
