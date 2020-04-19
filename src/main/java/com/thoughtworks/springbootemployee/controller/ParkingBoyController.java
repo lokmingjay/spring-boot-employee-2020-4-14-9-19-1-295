@@ -22,6 +22,12 @@ public class ParkingBoyController {
         return service.findAll();
     }
 
+    @GetMapping(params = {"page","pageSize"})
+    public List<ParkingBoy> findByPage(@RequestParam Integer page,
+                                       @RequestParam Integer pageSize) {
+        return service.findByPage(page,pageSize);
+    }
+
     @GetMapping("/{parkingBoyId}")
     public ParkingBoy findById(@PathVariable("parkingBoyId") Integer parkingBoyId){
         return service.findById(parkingBoyId);

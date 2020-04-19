@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.model.ParkingBoy;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import com.thoughtworks.springbootemployee.repository.ParkingBoyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,5 +29,9 @@ public class ParkingBoyService {
 
     public void updateName(Integer parkingBoyId, String nickName) {
         repository.updateName(parkingBoyId,nickName);
+    }
+
+    public List<ParkingBoy> findByPage(Integer page, Integer pageSize) {
+        return repository.findAll(PageRequest.of(page,pageSize)).getContent();
     }
 }

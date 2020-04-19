@@ -68,6 +68,23 @@ public class ParkingBoyControllerTest {
     }
 
     @Test
+    public void should_get_all_parking_boys_by_page() {
+
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .param("page","0")
+                .param("pageSize","1")
+                .when()
+                .get("/parking-boys");
+        List<ParkingBoy> parkingBoyList = response.getBody().as(new TypeRef<List<ParkingBoy>>() {
+            @Override
+            public Type getType() {
+                return super.getType();
+            }
+        });
+        Assert.assertEquals(1, parkingBoyList.size());
+    }
+
+    @Test
     public void should_create_parking_boy() {
         ParkingBoy parkingBoy = new ParkingBoy(null,"Test",null);
         MockMvcResponse response = given().contentType(ContentType.JSON)
