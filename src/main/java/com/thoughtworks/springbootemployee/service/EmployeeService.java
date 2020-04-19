@@ -26,11 +26,7 @@ public class EmployeeService {
     }
 
     public void updateEmployee(Integer employeeId, Employee newEmployee) {
-        Employee oldEmployee  = employeeRepository.findById(employeeId).orElse(null);
-        if(oldEmployee!=null) {
             employeeRepository.updateName(employeeId,newEmployee.getName());
-        }
-
     }
 
     public void removeEmployee(Integer employeeId) {

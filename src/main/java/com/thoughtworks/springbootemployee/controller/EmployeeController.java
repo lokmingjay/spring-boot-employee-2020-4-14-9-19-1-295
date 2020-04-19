@@ -16,7 +16,6 @@ public class EmployeeController {
     @Autowired
     private EmployeeService service;
 
-
     @GetMapping
     public List<Employee> getRangeEmployee(@RequestParam(required = false) Integer page,
                                            @RequestParam(required = false) Integer pageSize,
@@ -29,7 +28,6 @@ public class EmployeeController {
     public Employee findEmployeeById(@PathVariable("employeeId") Integer employeeId) {
         return service.findEmployeeById(employeeId);
     }
-
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -45,7 +43,6 @@ public class EmployeeController {
 
     @DeleteMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void removeEmployee(@PathVariable("employeeId") Integer employeeId) {
-          service.removeEmployee(employeeId);
+    public void removeEmployee(@PathVariable("employeeId") Integer employeeId) { service.removeEmployee(employeeId);
     }
 }

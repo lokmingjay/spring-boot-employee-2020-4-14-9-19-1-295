@@ -14,8 +14,6 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
 
-    public List<Employee> employees;
-    public List<Company> companyList;
 
     @Autowired
     private CompanyService service;
@@ -23,7 +21,6 @@ public class CompanyController {
     @GetMapping
     public List<Company> getCompanies(@RequestParam(required = false) Integer page,
                                       @RequestParam(required = false) Integer pageSize) {
-
         return service.getCompanies(page, pageSize);
     }
 
@@ -32,26 +29,27 @@ public class CompanyController {
         return service.getCompanyById(companyId);
     }
 
-//    @GetMapping("/{companyId}/employees")
-//    public List<Employee> getEmployeeByCompanyId(@PathVariable("companyId") int companyId) {
-//        return service.getEmployeesByCompanyId(companyId);
-//    }
-//
+    @GetMapping("/{companyId}/employees")
+    public List<Employee> getEmployeeByCompanyId(@PathVariable("companyId") Integer companyId) {
+        return service.getEmployeesByCompanyId(companyId);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Company createNewCompany(@RequestBody Company newCompany) {
         return service.createNewCompany(newCompany);
     }
-//
-//    @PutMapping("/{companyId}")
-//    public Company changeCompany(@PathVariable("companyId") int companyId, @RequestBody Company targetCompany) {
-//        return service.updateCompany(companyId,targetCompany);
-//    }
-//
-//    @DeleteMapping("/{companyId}")
-//    public void deleteEmployee(@PathVariable("companyId") int companyId) {
-//
-//        service.removeCompany(companyId);
-//    }
+
+    @PutMapping("/{companyId}")
+    public void changeCompany(@PathVariable("companyId") Integer companyId, @RequestBody Company targetCompany) {
+        service.updateCompanyById(companyId, targetCompany);
+    }
+
+    @DeleteMapping("/{companyId}")
+    public void deleteEmployeesByCompanyId(@PathVariable("companyId") Integer companyId) {
+        service.deleteEmployeeByCompanyId(companyId);
+    }
+
+
 
 }

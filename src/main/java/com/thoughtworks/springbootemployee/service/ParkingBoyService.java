@@ -21,4 +21,8 @@ public class ParkingBoyService {
     public ParkingBoy addParkingBoy(ParkingBoy parkingBoy) {
         return repository.save(parkingBoy);
     }
+
+    public ParkingBoy findById(Integer parkingBoyId) {
+        return repository.findById(parkingBoyId).orElse(null);
+    }
 }

@@ -19,10 +19,12 @@ public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
     List<Employee> findByGender(String gender);
 
     @Modifying
-    @Query(value ="update Employee e set e.name = :name where id = :employeeId", nativeQuery = true )
+    @Query(value ="update EMPLOYEE e set e.name = :name where e.id = :employeeId", nativeQuery = true )
     void updateName(@Param("employeeId") Integer employeeId,@Param("name") String name);
 
-
+    @Modifying
+    @Query(value ="update EMPLOYEE e set e.company_id = null where e.company_id = :companyId", nativeQuery = true )
+    void deleteEmployeeByCompanyId(@Param("companyId")  int companyId);
 //    public List<Employee> employeeList = new ArrayList<>(Arrays.asList(
 //            new Employee(1, "Jay", 10, "Male"),
 //            new Employee(2, "Andy", 20, "Male"),

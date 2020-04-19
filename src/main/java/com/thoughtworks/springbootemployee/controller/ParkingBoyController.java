@@ -22,10 +22,15 @@ public class ParkingBoyController {
         return service.findAll();
     }
 
+    @GetMapping("/{parkingBoyId}")
+    public ParkingBoy findById(@PathVariable("parkingBoyId") Integer parkingBoyId){
+        return service.findById(parkingBoyId);
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ParkingBoy createNewParkingBoy(@RequestBody ParkingBoy parkingBoy ) {
         return service.addParkingBoy(parkingBoy);
     }
+
 }

@@ -46,6 +46,9 @@ public class CompanyControllerTest {
                 new Employee(3, "Leo", 30, "Male",1),
                 new Employee(4, "Wesley", 40, "Male",1),
                 new Employee(5, "Hilary", 50, "Female",1)));
+        companyRepository.deleteAll();
+        companyRepository.resetAutoIncrement();
+      //  companyRepository.resetAutoIncrement("COMPANY");
         companyRepository.save( new Company("A", 5, null, 1));
         companyRepository.save( new Company("B", 5, null, 2));
         companyRepository.save( new Company("C", 5, null, 3));
@@ -78,8 +81,8 @@ public class CompanyControllerTest {
     @Test
     public void should_get_companies_with_page_success() {
         // given...
-        HashMap<String, Integer> parameters = new HashMap<String, Integer>();
-        parameters.put("page", 1);
+        HashMap<String, Integer> parameters = new HashMap<>();
+        parameters.put("page", 0);
         parameters.put("pageSize", 3);
         MockMvcResponse response = given().contentType(ContentType.JSON)
                 .params(parameters)
@@ -136,8 +139,8 @@ public class CompanyControllerTest {
                 .when()
                 .put("/companies/1");
 
-        Company targetCompany = response.getBody().as(Company.class);
-        Assert.assertEquals("AA", targetCompany.getCompanyName());
+        //Company targetCompany = response.getBody().as(Company.class);
+        Assert.assertEquals("AA", companyRepository.findById(1).get().getCompanyName());
     }
 
 //    @Test
@@ -163,6 +166,7 @@ public class CompanyControllerTest {
                 return super.getType();
             }
         });
+        Assert.assertEquals(5,companyRepository.findById(1).get().getEmployeesNumber().intValue());
 
     }
 }

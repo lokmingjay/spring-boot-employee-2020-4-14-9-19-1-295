@@ -65,4 +65,14 @@ public class ParkingBoyControllerTest {
         Assert.assertEquals(2, parkingBoyList.size());
         Assert.assertEquals(23,parkingBoyList.get(0).getEmployee().getAge().intValue());
     }
+
+    @Test
+    public void should_get_parking_boy_by_id() {
+
+        MockMvcResponse response = given().contentType(ContentType.JSON)
+                .when()
+                .get("/parking-boys/1");
+        ParkingBoy parkingBoy = response.getBody().as(ParkingBoy.class);
+        Assert.assertEquals("Jay",parkingBoy.getNickName());
+    }
 }
